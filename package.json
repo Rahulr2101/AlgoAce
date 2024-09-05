@@ -9,9 +9,16 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.2",
+    "@uiw/codemirror-theme-abcdef": "^4.23.0",
+    "@uiw/react-codemirror": "^4.23.0",
+    "bcrypt": "^5.1.1",
+    "mongodb": "^6.8.0",
+    "mongoose": "^8.6.1",
+    "next": "14.2.7",
+    "next-auth": "^4.24.7",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "14.2.7"
+    "react-dom": "^18"
   },
   "devDependencies": {
     "postcss": "^8",
