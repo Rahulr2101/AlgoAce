@@ -7,10 +7,12 @@ import QuestionPanel from "@components/questionPanel";
 import Chat from "@components/chat";
 import Link from "next/link";
 import { useState } from "react";
+import { judge } from "./api/problems/judge";
 
 const Home = () => {
+  const [value, setValue] = useState("console.log('hello world!');");
   const [page,setPage] = useState(0);
-  return (
+  return (  
     <div className=" w-full flex flex-col  bg-slate-100 min-h-screen ">
       <div className="flex justify-between p-1 items-center">
         <Link href="/">
@@ -44,7 +46,11 @@ const Home = () => {
               height={15}
               width={15}
             />
-            <button className="font-thin">Run</button>
+            <button className="font-thin " onClick={()=>{
+              judge(value).then((data)=>{
+                console.log(data);
+              })
+            }}>Run</button>
           </div>
         </div>
         <div className="flex flex-row gap-2">
@@ -55,7 +61,7 @@ const Home = () => {
       <div className="flex-grow grid grid-cols-2 gap-3 p-2 h-full">
         {page === 0 ? <QuestionPanel setpage = {setPage} page = {page} /> : <Chat  setpage = {setPage} page = {page} />}
         
-        <Editor />
+        <Editor setValue = {setValue} value={value} />
       </div>
     </div>
   );

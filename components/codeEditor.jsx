@@ -4,11 +4,12 @@ import { createTheme } from "@uiw/codemirror-themes";
 import { tags as t } from '@lezer/highlight';
 import { javascript } from "@codemirror/lang-javascript";
 import { useState } from "react";
+import { python } from "@codemirror/lang-python";
 
-const CodeEditor = () => {
-    const [value, setValue] = useState("console.log('hello world!');");
+const CodeEditor = ({setValue,value}) => {
+   
     const onChange = React.useCallback((val, viewUpdate) => {
-      console.log("val:", val);
+      console.log("val:",val );
       setValue(val);
     }, []);
   const myTheme = createTheme({
@@ -39,8 +40,7 @@ const CodeEditor = () => {
       <CodeMirror
         value={value}
         height="200px"
-    
-        extensions={[javascript({ jsx: true })]}
+        extensions={[python()]}
         onChange={onChange}
       />
     </div>

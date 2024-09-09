@@ -2,14 +2,20 @@ import React from "react";
 import { getQuestion } from "@app/api/problems/problems";
 import { useEffect } from "react";
 import Nav from "@components/togglenav";
+import {testCode} from "@app/api/problems/judge";
 
 const QuestionPanel = (props ) => {
   const [question, setQuestion] = React.useState({});
   useEffect(() => {
+   
     getQuestion().then((data) => {
       setQuestion(data);
     });
+   
+  
   }, []);
+
+
 
   const difficultyClasses = {
     easy: "bg-green-200",
