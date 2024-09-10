@@ -1,10 +1,13 @@
-export const judge = async (value) => {
+export const judge = async (value,problemID,unique,program) => {
     console.log("user:",value);
     
    
     const data = {
         compiler: "python-3.9.7",  
-        code: value 
+        code: value,
+        questionId: problemID,
+        unique: unique,
+        program:program
     }
     try{
         const res = await fetch("http://localhost:3000/api/execute", {

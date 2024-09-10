@@ -36,10 +36,11 @@ const CodeEditor = ({setValue,value}) => {
     ],
   });
   return (
-    <div>
-      <CodeMirror
+    <div className="flex flex-grow">
+      <CodeMirror className="w-full"
         value={value}
-        height="200px"
+        height="100%" 
+        
         extensions={[python()]}
         onChange={onChange}
       />
