@@ -20,8 +20,11 @@ const Home = ({ params }) => {
 
   // Fetch question data
   useEffect(() => {
+    
     getQuestion(params.id).then((data) => {
       setQuestion(data);
+      console.log(data);
+     
     });
   }, [params.id]);
 
@@ -45,10 +48,25 @@ const Home = ({ params }) => {
     });
 
     const result = await submission.json();
-    if (result.data) {
+    
+    if (result.data.length === question.testcase.length) {
+     
+      for ( let testCase of result.data){
+      
+        if (testCase.output.trim()!== testCase.excepted_output){
+          testCase.status = "Test Case Failed :(";
+          setOutput(testCase);
+          break;
+        }else{
+          testCase.status = "Test Case Passed :)";
+          setOutput(result.data);
+        }
+      }
+
+   
       setIsPolling(false);
-      console.log(result.data);
-      setOutput(result.data);
+      
+     
     }
   };
 
@@ -71,7 +89,7 @@ const Home = ({ params }) => {
     <div className="w-full flex flex-col min-h-screen">
       <div className="flex bg-slate-950 justify-between p-1 items-center">
         <Link href="/">
-          <div className="text-3xl font-normal ">
+          <div className="md:text-3xl text-2xl font-normal ">
             <span className="text-green-700 font-bold">&lt;<span className="text-orange-600 font-normal">/</span>&gt;</span>AlgoAce
           </div>
         </Link>
@@ -97,7 +115,7 @@ const Home = ({ params }) => {
           <h1 className="text-slate-400">SignIn</h1>
         </div>
       </div>
-      <div className="flex-grow grid grid-cols-2 gap-3 p-2 h-full">
+      <div className="flex-grow grid grid-rows-2 md:grid-cols-2 gap-3 p-2 h-full">
         {page === 0 ? (
           <QuestionPanel problemID={params.id} question={question} setpage={setPage} page={page} />
         ) : (

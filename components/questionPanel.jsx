@@ -23,15 +23,15 @@ const QuestionPanel = ({ problemID, question, setpage, page }) => {
       <p className="text-md font-montserrat">{question.description}</p>
 
       {examples.length > 0 && (
-        <div className="mt-4">
+        <div className="mt-4 ">
           {examples.map((example, index) => (
             <div key={index}>
               <h2 className="text-md font-semibold pt-2 pb-2">Examples {index + 1}</h2>
-              <div className="border border-slate-500 rounded-2xl p-2 mb-2 bg-slate-600">
+              <div className="border border-slate-500 rounded-2xl p-2 mb-2 bg-slate-600 break-words">
                 <div className="font-bold">Input:</div>
-                <pre>{example.input}</pre>
+                <pre className="whitespace-pre-wrap">{example.input}</pre>
                 <div className="font-bold">Output:</div>
-                <pre>{example.output}</pre>
+                <pre className="whitespace-pre-wrap">{example.output}</pre>
               </div>
             </div>
           ))}
