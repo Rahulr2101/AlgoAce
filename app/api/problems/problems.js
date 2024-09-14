@@ -1,7 +1,8 @@
-export const getQuestion = async () => {
+export const getQuestion = async (ID) => {
   try {
+    
     const res = await fetch(
-      "http://localhost:3000/api/problem/get/66dab561b8830c08057a2675"
+      `http://localhost:3000/api/problem/get/${ID}`
     );
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);

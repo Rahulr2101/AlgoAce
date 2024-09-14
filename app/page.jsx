@@ -1,127 +1,71 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
-import Editor from "@components/codeEditor";
-import QuestionPanel from "@components/questionPanel";
-import Chat from "@components/chat";
-import Link from "next/link";
-import { judge } from "./api/problems/judge";
+import { getAlgoQuestions } from "@app/api/problems/problems";
+import Link from 'next/link';
+import {CheckboxLabel} from "@components/checkBoxLabel";
 
-const Home = () => {
-  const [value, setValue] = useState("print('Hello World');");
-  const [page, setPage] = useState(0);
-  const [isPolling, setIsPolling] = useState(false);
-  const [unique, setUnique] = useState("");
-  const [output, setOutput] = useState("");
-  const runCode = async () => {
-    const uniqueKey = uuidv4();
-    setUnique(uniqueKey);  
-    judge(value, "66dab561b8830c08057a2675",uniqueKey,value).then((res) => {
-  
-    });
-    getSubmission();
-    setIsPolling(true);
-  };
-  const getSubmission = async () => {
-    const submission = await fetch("http://localhost:3000/api/submission", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ questionId: "66dab561b8830c08057a2675", unique: unique }),
-    });
-    const result = await submission.json();
-    if (result.data){
-      setIsPolling(false);
-      console.log(result.data)
-      setOutput(result.data.output);
-      console.log(result.data.output) 
-      console.log(output)
-    }
-  };
 
+
+const Page = () => {
+  const [problems, setProblems] = useState([]);
 
   useEffect(() => {
-    let pollingInterval;
+    getAlgoQuestions().then((res) => {
+      console.log(res.data);
+      setProblems(res.data);
 
-    if (isPolling) {
-      pollingInterval = setInterval(() =>  {
-        getSubmission();
-      }, 3000);
-    }
-    return () => {
-      if (pollingInterval) {
-        clearInterval(pollingInterval);
-      }
-    };
-  }, [isPolling]);
+    });
+  }, []);
+
+  const difficultyClasses = {
+    Easy: "text-green-500",
+    Medium: "text-yellow-500",
+    Hard: "text-red-500",
+  };
 
   return (
-    <div className="w-full flex flex-col bg-slate-100 min-h-screen">
-      <div className="flex justify-between p-1 items-center">
-        <Link href="/">
-          <img
-            alt="logo"
-            src="assets/images/logo.png"
-            height={120}
-            width={120}
-          />
-        </Link>
+    <div className="flex flex-col  ">
+      <div className="  bg-dark-secondary h-36 flex items-center p-4 "><h1 className="text-2xl font-normal">Sorting</h1></div>
+    <div className="flex flex-row  justify-center gap-10  p-4">
+      <div className="flex flex-col items-center gap-4">
+        {problems.map((problem, index) => (
+          <Link href={`/problem/${problem._id}`} key={index}>
+              <div className=" flex items-center bg-secondary p-4 rounded-2xl h-28 shadow-md w-[600px] ">
+                <div className="flex flex-grow flex-row justify-between items-center gap-2">
+                  <div>
+                  <h2 className="text-xl  mb-2  font-normal font-body">{problem.title}</h2>
+                  <p className="text-sm font-normal "><span className={`text-center ${difficultyClasses[problem.difficulty]}`}>{problem.difficulty}</span>, Array</p>
+                  </div>
 
-        <div className="flex gap-2 rounded-md p-2 px-1 py-2">
-          <div className="flex items-center bg-slate-200 rounded-md py-2 px-2">
-            <img
-              src="assets/images/upload.svg"
-              alt="upload"
-              height={20}
-              width={20}
-            />
-            <button
-              type="button"
-              className="text-green-600 font-medium rounded-lg w-20 h-6"
-            >
-              Submit
-            </button>
-          </div>
-          <div className="flex items-center bg-slate-200 px-2 py-2 rounded-md gap-1">
-            <img
-              src="assets/images/play.svg"
-              alt="run"
-              height={15}
-              width={15}
-            />
-            <button className="font-thin" onClick={runCode}>
-              Run
-            </button>
-          </div>
-        </div>
-        <div className="flex flex-row gap-2">
-          <h1 className="text-slate-400">Register</h1>
-          <h1 className="text-slate-400">SignIn</h1>
-        </div>
+                  <button className=" bg-transparent border-[0.1px] w-32 h-12 rounded-2xl border-white hover:bg-accent">
+                   <h1 className="font-thin"> Solve Challenge</h1> 
+                  </button>
+                
+                </div>
+              </div>
+          
+          </Link>
+        ))}
       </div>
-      <div className="flex-grow grid grid-cols-2 gap-3 p-2 h-full">
-        {page === 0 ? (
-          <QuestionPanel setpage={setPage} page={page} />
-        ) : (
-          <Chat setpage={setPage} page={page} />
-        )}
-        <div className="bg-slate-200 p-2 flex flex-col h-full">
-        
-        <Editor className="h-full" setValue={setValue} value={value} />
-          {output !== "" && (
-            <div className="">
-              <h1 className="text-slate-400">Output</h1>
-              <pre className="bg-white p-2 rounded-md border border-gray-300">
-                {output}
-              </pre>
-            </div>
-          )}
+      <div className="flex flex-col gap-4">
+        <div className="space-y-2">
+          <h1 className="text-slate-300 text-xl">STATUS</h1>
+        <CheckboxLabel text={"Solved"}/>
+        <CheckboxLabel text={"Unsolved"}/>
         </div>
+        <div className="border-[0.0001px] border-slate-400"></div>
+        <div className="space-y-2">
+          <h1 className="text-slate-300 text-xl">DIFFICULTY</h1>
+          <CheckboxLabel text={"Easy"}/>
+        <CheckboxLabel text={"Medium"}/>
+        <CheckboxLabel text={"Hard"}/>
+       
+        </div>
+       
       </div>
+    </div>
     </div>
   );
 };
 
-export default Home;
+export default Page;

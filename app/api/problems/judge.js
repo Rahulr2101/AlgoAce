@@ -1,9 +1,9 @@
-export const judge = async (value,problemID,unique,program) => {
+export const judge = async (value,problemID,unique,program,compiler) => {
     console.log("user:",value);
     
    
     const data = {
-        compiler: "python-3.9.7",  
+        compiler: compiler,  
         code: value,
         questionId: problemID,
         unique: unique,
