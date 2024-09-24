@@ -2,9 +2,9 @@
 
 import { Checkbox } from "@/components/ui/checkbox"
 
-export function CheckboxLabel({text}) {
+export function CheckboxLabel({text, onClick}) {
   return (
-    <div className="flex items-center space-x-2">
+    <div className="flex items-center space-x-2" onClick={onClick}>
       <Checkbox id="terms" />
       <label
         htmlFor="terms"

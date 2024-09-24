@@ -36,8 +36,6 @@ const CodeEditor = ({ setValue, value, compiler, setCompiler }) => {
     }
   };
 
- 
-
   return (
     <div className="flex flex-col">
       <div className=" flex flex-col p-2 rounded-t-lg gap-1">
