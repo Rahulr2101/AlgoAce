@@ -34,7 +34,7 @@ export const getQuestionByType = async (type) => {
 
 export const getAlgoQuestions = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/problem/");
+    const res = await fetch("https://algo-ace-backend.vercel.app/api/problem/");
     if(res.status === 401){
       window.location.href = "/auth";
     }
