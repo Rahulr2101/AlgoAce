@@ -18,6 +18,9 @@ export const judge = async (value,problemID,unique,program,compiler) => {
             },
             body: JSON.stringify(data),
         });
+        if(res.status === 401){
+            window.location.href = "/auth";
+          }
         return res.json();
     }catch(err){
         console.error("Something went wrong")

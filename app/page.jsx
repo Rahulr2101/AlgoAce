@@ -18,9 +18,10 @@ const Page = () => {
 
   useEffect(() => {
     fetchUserData().then((data) => {
+     
       setUserData(data);
       setTimeout(() => setLoading(false), 600);
-      console.log(data);
+      // console.log(data);
     });
   }, []);
 
@@ -46,7 +47,7 @@ const Page = () => {
           transition={{ duration: 0.5 }}
           className=""
         >
-          <Nav />
+          <Nav userName={userData.username || "User"} />
           <div className="container mx-auto px-4 py-8">
           <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4 mt-8">
             <UserProfileCard userData={userData} />

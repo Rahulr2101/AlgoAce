@@ -8,7 +8,9 @@ export const fetchUserData = async () => {
         },
       });
       
-
+      if(res.status === 401){
+        window.location.href = "/auth";
+      }
       if (!res.ok) {
         throw new Error("Failed to fetch data");
       }

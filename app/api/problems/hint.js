@@ -13,6 +13,9 @@ const res = await fetch("http://localhost:3000/api/generate",
         body: JSON.stringify(data),
     }
 )
+if(res.status === 401){
+    window.location.href = "/auth";
+  }
 return res.json();
 }catch(err){
 

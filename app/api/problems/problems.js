@@ -19,8 +19,13 @@ export const getQuestionByType = async (type) => {
         "Content-Type": "application/json",
       },
     });
+    if(res.status === 401){
+      window.location.href = "/auth";
+    }
     const data = await res.json();
+    
     return data;
+  
   } catch (err) {
     console.error("Error fetching data:", err);
     return null; 
@@ -30,6 +35,9 @@ export const getQuestionByType = async (type) => {
 export const getAlgoQuestions = async () => {
   try {
     const res = await fetch("http://localhost:3000/api/problem/");
+    if(res.status === 401){
+      window.location.href = "/auth";
+    }
     return res.json();
   } catch (err) {
     console.error(err);

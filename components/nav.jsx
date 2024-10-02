@@ -1,7 +1,12 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 
-const nav = ({className}) => {
+const nav =  ({className,userName}) => {
+ 
+ 
+ 
+  
+
   return (
     <header  className={`flex justify-between p-2 h-20 items-center bg-dark-100 border-b border-5 border-gray-600 ${className}`}>
       <Link href='/'>
@@ -14,7 +19,7 @@ const nav = ({className}) => {
           </Link>
       <div className="flex justify-center items-center gap-2">
         <img src={"https://avatar.iran.liara.run/public"} className="w-12 rounded-2xl"/>
-        <h1 className=" text-slate-500"> Hi, Rahul Rajesh Kumar</h1>
+        <h1 className=" text-slate-500">Hi, {userName}</h1>
       </div>
     </header>
   );
