@@ -4,7 +4,7 @@ const RootLayout = ({ children }) => {
   return (
     <html lang="en">
       <body>
-        <div className=" relative min-h-screen text-text bg-background">
+        <div className=" relative min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100">
           {children}
         </div>
       </body>

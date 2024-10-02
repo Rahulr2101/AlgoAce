@@ -18,8 +18,10 @@ export const judge = async (value,problemID,unique,program,compiler) => {
             },
             body: JSON.stringify(data),
         });
+        return res.json();
     }catch(err){
         console.error("Something went wrong")
 
     }
+   
 }

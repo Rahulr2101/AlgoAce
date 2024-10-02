@@ -1,75 +1,119 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { getAlgoQuestions } from "@app/api/problems/problems";
-import Link from 'next/link';
-import {CheckboxLabel} from "@components/checkBoxLabel";
 
-import Navbar from "@components/nav";
+import Nav from "@components/nav";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { fetchUserData } from "@app/api";
+import { useEffect, useState } from "react";
+import LoadingScreen from "@/components/loadingScreen";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Page = () => {
-  const [problems, setProblems] = useState([]);
-  const [type, setType] = useState("");
+  const [userData, setUserData] = useState({ data: {}, username: "", totalProgress: 0 });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getAlgoQuestions().then((res) => {
-      setProblems(res.data);
+    fetchUserData().then((data) => {
+      setUserData(data);
+      setTimeout(() => setLoading(false), 600);
+      console.log(data);
     });
   }, []);
 
-  const difficultyClasses = {
-    Easy: "text-green-500",
-    Medium: "text-yellow-500",
-    Hard: "text-red-500",
-  };
-
-  const filteredProblems = problems.filter(problem => {
-    if (type === "Easy") return problem.difficulty === "Easy";
-    if (type === "Medium") return problem.difficulty === "Medium";
-    if (type === "Hard") return problem.difficulty === "Hard";
-    return true;
-  });
-
   return (
-    <div className="flex flex-col not-sr-only">
-      <Navbar className="sticky top-0 z-10" />
-      <div className="bg-dark-secondary h-36 flex items-center p-4">
-        <h1 className="text-2xl font-normal">Sorting</h1>
-      </div>
-      <div className="flex flex-row justify-center gap-10 p-4">
-        <div className="flex flex-col items-center gap-4">
-          {filteredProblems.map((problem, index) => (
-            <Link href={`/problem/${problem._id}`} key={index}>
-              <div className="flex items-center bg-secondary p-4 rounded-2xl h-28 shadow-md w-[600px]">
-                <div className="flex flex-grow flex-row justify-between items-center gap-2">
-                  <div>
-                    <h2 className="text-xl mb-2 font-normal font-body">{problem.title}</h2>
-                    <p className="text-sm font-normal">
-                      <span className={`text-center ${difficultyClasses[problem.difficulty]}`}>{problem.difficulty}</span>, Array
-                    </p>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-gray-100">
+      {loading ? (
+        <motion.div
+          key="loading"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="flex justify-center items-center min-h-screen"
+        >
+          <LoadingScreen />
+        </motion.div>
+      ) : (
+        <motion.div
+          key="content"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className=""
+        >
+          <Nav />
+          <div className="container mx-auto px-4 py-8">
+          <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4 mt-8">
+            <Card className="col-span-full md:col-span-1 bg-gray-800 border-gray-700 shadow-lg">
+              <CardHeader>
+                <CardDescription>
+                  <img
+                    src={"https://avatar.iran.liara.run/public"}
+                    className="w-40 h-40 rounded-full mx-auto border-4 border-gray-500"
+                    alt="User Avatar"
+                  />
+                </CardDescription>
+                <div className="text-2xl text-center mt-4 text-gray-300">{userData.username || "User"}</div>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-2">
+                  <div className="flex justify-between items-center">
+                    <span className="text-xl font-bold">Progress</span>
                   </div>
-                  <button className="bg-transparent border-[0.1px] w-32 h-12 rounded-2xl border-white hover:bg-accent">
-                    <h1 className="font-thin"> Solve Challenge</h1>
-                  </button>
+                  <h1 className="text-green-600 font-semibold">Easy</h1>
+                  <h2 className="text-yellow-600 font-semibold">Medium</h2>
+                  <h3 className="text-red-600 font-semibold">Hard</h3>
                 </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-        <div className="flex flex-col gap-4">
-          <div className="space-y-2">
-            <h1 className="text-slate-300 text-xl">STATUS</h1>
-            <CheckboxLabel text={"Solved"} />
-            <CheckboxLabel text={"Unsolved"} />
+              </CardContent>
+            </Card>
+
+            <div className="col-span-full md:col-span-2 lg:col-span-3 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              <Card className="col-span-full bg-secondary">
+                <CardHeader>
+                  <CardTitle>Welcome back, {userData.username || "User"}!</CardTitle>
+                  <CardDescription>Here's an overview of your learning progress</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2">
+                    <div className="flex justify-between items-center">
+                      <span>Overall Progress</span>
+                      <span className="font-semibold">{userData.totalProgress}%</span>
+                    </div>
+                    <Progress value={parseFloat(userData.totalProgress)} className="w-full" />
+                  </div>
+                </CardContent>
+              </Card>
+
+              {Object.keys(userData.data).map((algo) => (
+                <Card className="bg-gray-800 border-gray-700 shadow-lg hover:shadow-xl transition-shadow duration-300" key={algo}>
+                  <CardHeader>
+                    <CardTitle>{algo}</CardTitle>
+                    <CardDescription>Master the {algo.toLowerCase()} algorithm</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-2">
+                      <div className="flex justify-between items-center">
+                        <span>Progress</span>
+                        <span className="font-semibold">{userData.data[algo].progress}%</span>
+                      </div>
+                      <Progress value={parseFloat(userData.data[algo].progress)} className="w-full bg-gray-700" />
+                    </div>
+                    <Link href={`/${algo}`} key={userData.data[algo]._id}>
+                      <Button className="w-full mt-4 bg-gray-600 hover:bg-gray-700 text-white transition-colors duration-300">
+                        Continue Learning
+                      </Button>
+                    </Link>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
-          <div className="border-[0.0001px] border-slate-400"></div>
-          <div className="space-y-2">
-            <h1 className="text-slate-300 text-xl">DIFFICULTY</h1>
-            <CheckboxLabel text={"Easy"} onClick={() => { setType("Easy"); }} />
-            <CheckboxLabel text={"Medium"} onClick={() => { setType("Medium"); }} />
-            <CheckboxLabel text={"Hard"} onClick={() => { setType("Hard"); }} />
           </div>
-        </div>
-      </div>
+        </motion.div>
+      )}
     </div>
   );
 };

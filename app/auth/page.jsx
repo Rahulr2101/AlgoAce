@@ -16,22 +16,21 @@ export default function Page() {
   const router = useRouter()
 
   const handleUserLogin = async (e) => {
-    e.preventDefault() // Prevent default form submission
+    e.preventDefault() 
     try {
       console.log("email:", email);
       const res = await login(email, password)
       console.log(res);
       if(res.success){
         router.push('/')
-      } // Ensure you call login with correct parameters
-       // Navigate to home page
+      } 
     } catch (err) {
       console.error('Login failed:', err)
     }
   }
 
   const handleUserRegister = async (e) => {
-    e.preventDefault() // Prevent default form submission
+    e.preventDefault()
     try {
       await register(userName, password, email) // Ensure you call register with correct parameters
       router.push('/') // Navigate to home page
