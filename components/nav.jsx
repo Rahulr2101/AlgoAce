@@ -17,10 +17,13 @@ const nav =  ({className,userName}) => {
             AlgoAce
           </div>
           </Link>
+      <Link href="/auth">
       <div className="flex justify-center items-center gap-2">
+        <link href="/assets/images/play.svg" />
         <img src="/assets/images/profile.png" className="w-12 rounded-2xl"/>
         <h1 className=" text-slate-500">Hi, {userName}</h1>
       </div>
+      </Link>
     </header>
   );
 };

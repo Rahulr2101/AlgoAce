@@ -3,7 +3,6 @@ import React, { useEffect, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Editor from "@components/codeEditor";
 import QuestionPanel from "@components/questionPanel";
-import Chat from "@components/chat";
 import Link from "next/link";
 import { judge } from "../../api/problems/judge";
 import OutputConsole from "@components/output";
@@ -69,6 +68,7 @@ const Page = ({ params }) => {
                 className="text-white border-2 border-accent flex flex-row rounded-md px-3 py-2 justify-center bg-accent items-center gap-3 hover:bg-transparent hover:text-accent"
                 onClick={runCode}
               >
+                
                 <img
                   src="/assets/images/play.svg"
                   alt="run"
@@ -78,6 +78,7 @@ const Page = ({ params }) => {
                 Execute
               </button>
             </div>
+            <Link href="/auth">
             <div className="flex flex-row items-center gap-2 text-gray-400 p-2">
               <img
                 src={"/assets/images/profile.png"}
@@ -85,20 +86,19 @@ const Page = ({ params }) => {
                 alt="User Avatar"
               />
             </div>
+            </Link>
           </div>
 
           <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 gap-3 p-4">
             <div className="flex flex-col h-full">
-              {page === 0 ? (
+              
                 <QuestionPanel
                   problemID={params.id}
                   question={question}
                   setPage={setPage}
                   page={page}
                 />
-              ) : (
-                <Chat setPage={setPage} page={page} />
-              )}
+              
             </div>
             <div className="bg-slate-800 p-4 flex flex-col h-full">
               <Editor

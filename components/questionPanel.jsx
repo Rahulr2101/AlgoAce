@@ -1,5 +1,4 @@
 import React from "react";
-import Nav from "@components/togglenav";
 import { useState } from "react";
 import { hints } from "@app/api/problems/hint";
 import { TypeAnimation } from "react-type-animation";
@@ -26,7 +25,6 @@ const QuestionPanel = ({ problemID, question, setpage, page }) => {
 
   return (
     <div className="flex flex-col gap-3 px-2 py-2 rounded-lg">
-      <Nav page={page} setpage={setpage} />
       <h1 className="text-2xl font-semibold font-serif ">{question.title}</h1>
       <div
         className={`w-min rounded-lg text-center px-1 ${
