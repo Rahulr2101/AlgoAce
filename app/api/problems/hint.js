@@ -3,7 +3,7 @@ try{
 const data ={
     message: question
 }
-const res = await fetch("http://localhost:3000/api/generate",
+const res = await fetch("https://algo-ace-backend.vercel.app/api/generate",
     {
         method:"POST",
         credentials: 'include',

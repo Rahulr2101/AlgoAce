@@ -1,6 +1,6 @@
 export const fetchUserData = async () => {
     try {
-      const res = await fetch("http://localhost:3000/api/details", {
+      const res = await fetch("https://algo-ace-backend.vercel.app/api/details", {
         method: "GET",
         credentials: "include",
         headers: {

@@ -10,7 +10,7 @@ export const judge = async (value,problemID,unique,program,compiler) => {
         program:program
     }
     try{
-        const res = await fetch("http://localhost:3000/api/execute", {
+        const res = await fetch("https://algo-ace-backend.vercel.app/api/execute", {
             method: "POST",
             credentials: 'include',
             headers: {

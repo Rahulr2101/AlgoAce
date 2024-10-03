@@ -1,7 +1,7 @@
 export const login = async ( email,password) => {
   try {
   
-    const response = await fetch("http://localhost:3000/api/auth/login", {
+    const response = await fetch("https://algo-ace-backend.vercel.app/api/auth/login", {
       method: "POST",
       credentials: 'include' ,
       headers: {
@@ -17,7 +17,7 @@ export const login = async ( email,password) => {
 };
 export const register = async (name, password, email) => {
   try {
-    const response = await fetch("http://localhost:3000/api/auth/register", {
+    const response = await fetch("https://algo-ace-backend.vercel.app/api/auth/register", {
       method: "POST",
       credentials: 'include' ,
       headers: {

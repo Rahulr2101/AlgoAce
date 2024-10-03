@@ -1,6 +1,6 @@
 export const getQuestion = async (ID) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/problem/get/${ID}`);
+    const res = await fetch(`https://algo-ace-backend.vercel.app/api/problem/get/${ID}`);
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
@@ -12,7 +12,7 @@ export const getQuestion = async (ID) => {
 };
 export const getQuestionByType = async (type) => {
   try {
-    const res = await fetch(`http://localhost:3000/api/problem/${type}`, {
+    const res = await fetch(`https://algo-ace-backend.vercel.app/api/problem/${type}`, {
       method: "GET",
       credentials: "include",
       headers: {
@@ -34,7 +34,7 @@ export const getQuestionByType = async (type) => {
 
 export const getAlgoQuestions = async () => {
   try {
-    const res = await fetch("https://algo-ace-backend.vercel.app/api/problem/");
+    const res = await fetch("https://algo-ace-backend.vercel.appapi/problem/");
     if(res.status === 401){
       window.location.href = "/auth";
     }
