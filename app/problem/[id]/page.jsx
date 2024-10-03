@@ -1,4 +1,5 @@
-"use client";
+"use client"
+
 import React, { useEffect, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Editor from "@components/codeEditor";
@@ -16,6 +17,7 @@ const Page = ({ params }) => {
   const uniqueKeyRef = useRef("");
   const [compiler, setCompiler] = useState("python-3.9.7");
   const [output, setOutput] = useState("");
+  const [error, setError] = useState(""); // New error state
   const [question, setQuestion] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -29,9 +31,25 @@ const Page = ({ params }) => {
   const runCode = async () => {
     const newUniqueKey = uuidv4();
     uniqueKeyRef.current = newUniqueKey;
-    judge(value, params.id, newUniqueKey, value, compiler).then((res) => {
-      setOutput(res);
-    });
+
+    // Reset error and output before making the judge call
+    setError("");
+    setOutput("");
+
+    try {
+      const res = await judge(value, params.id, newUniqueKey, value, compiler);
+
+      // Check if the judge response is empty or indicates an issue
+      if (!res || res.error) {
+        setError("Something went wrong. Please try again.");
+      } else {
+        setOutput(res); // If successful, set the output
+      }
+    } catch (err) {
+      // Handle any errors that occur during the judge call
+      setError("An unexpected error occurred. Please try again.");
+      console.error("Judge error:", err); // Optional: log the error for debugging
+    }
   };
 
   return (
@@ -68,7 +86,6 @@ const Page = ({ params }) => {
                 className="text-white border-2 border-accent flex flex-row rounded-md px-3 py-2 justify-center bg-accent items-center gap-3 hover:bg-transparent hover:text-accent"
                 onClick={runCode}
               >
-                
                 <img
                   src="/assets/images/play.svg"
                   alt="run"
@@ -79,26 +96,24 @@ const Page = ({ params }) => {
               </button>
             </div>
             <Link href="/auth">
-            <div className="flex flex-row items-center gap-2 text-gray-400 p-2">
-              <img
-                src={"/assets/images/profile.png"}
-                className="w-12 rounded-2xl"
-                alt="User Avatar"
-              />
-            </div>
+              <div className="flex flex-row items-center gap-2 text-gray-400 p-2">
+                <img
+                  src={"/assets/images/profile.png"}
+                  className="w-12 rounded-2xl"
+                  alt="User Avatar"
+                />
+              </div>
             </Link>
           </div>
 
           <div className="min-h-screen grid grid-cols-1 md:grid-cols-2 gap-3 p-4">
             <div className="flex flex-col h-full">
-              
-                <QuestionPanel
-                  problemID={params.id}
-                  question={question}
-                  setPage={setPage}
-                  page={page}
-                />
-              
+              <QuestionPanel
+                problemID={params.id}
+                question={question}
+                setPage={setPage}
+                page={page}
+              />
             </div>
             <div className="bg-slate-800 p-4 flex flex-col h-full">
               <Editor
@@ -109,6 +124,11 @@ const Page = ({ params }) => {
                 value={value}
               />
               {output && <OutputConsole data={output} />}
+              {error && (
+                <div className="mt-4 text-red-500 bg-red-100 p-3 rounded-md">
+                  {error}
+                </div>
+              )}
             </div>
           </div>
         </motion.div>
