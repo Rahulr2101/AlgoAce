@@ -18,7 +18,7 @@ const nav =  ({className,userName}) => {
           </div>
           </Link>
       <div className="flex justify-center items-center gap-2">
-        <img src={"https://avatar.iran.liara.run/public"} className="w-12 rounded-2xl"/>
+        <img src="/assets/images/profile.png" className="w-12 rounded-2xl"/>
         <h1 className=" text-slate-500">Hi, {userName}</h1>
       </div>
     </header>

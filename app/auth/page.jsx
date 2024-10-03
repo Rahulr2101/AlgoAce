@@ -41,7 +41,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex min-h-[100dvh] flex-col">
+    <div className="flex min-h-[100dvh]  flex-col">
       <header className="bg-gray-900 px-4 py-3 shadow">
         <div className="container mx-auto flex items-center justify-between">
           <Link href="#" className="flex items-center" prefetch={false}>
@@ -129,7 +129,7 @@ export default function Page() {
               </form>
             </div>
           )}
-          <div className="rounded-lg bg-background p-6 shadow-sm md:p-8">
+          <div className="rounded-lg bg-background p-6 shadow-sm md:p-8 space-y-4">
             <h2 className="mb-4 text-2xl font-bold">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
             </h2>
@@ -142,6 +142,15 @@ export default function Page() {
               className="w-full">
               {isLogin ? "Sign Up" : "Login"}
             </Button>
+            {isLogin?(<Button
+              variant="default"
+              onClick={() => {
+                setEmail("abc@gmail.com")
+                setPassword("123")
+              }}
+              className="w-full">
+              Auto-fill
+            </Button>):(<></>)}
           </div>
         </div>
       </main>

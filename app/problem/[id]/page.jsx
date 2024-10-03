@@ -80,11 +80,10 @@ const Page = ({ params }) => {
             </div>
             <div className="flex flex-row items-center gap-2 text-gray-400 p-2">
               <img
-                src={"https://avatar.iran.liara.run/public"}
+                src={"/assets/images/profile.png"}
                 className="w-12 rounded-2xl"
                 alt="User Avatar"
               />
-              <h1>Hi, Rahul Rajesh Kumar</h1>
             </div>
           </div>
 

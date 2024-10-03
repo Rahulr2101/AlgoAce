@@ -3,13 +3,14 @@ import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/
 import { Progress } from "@/components/ui/progress";
 import { Trophy, Target, Book, Clock, Calendar, Award } from "lucide-react";
 
+
 const UserProfileCard = ({ userData }) => {
   return (
     <Card className="col-span-full md:col-span-1 bg-gray-800 border-gray-700 shadow-lg">
       <CardHeader>
         <CardDescription>
           <img
-            src={"https://avatar.iran.liara.run/public"}
+            src="/assets/images/profile.png"
             className="w-40 h-40 rounded-full mx-auto border-4 border-blue-500"
             alt="User Avatar"
           />

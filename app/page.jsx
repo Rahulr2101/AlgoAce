@@ -47,7 +47,7 @@ const Page = () => {
           transition={{ duration: 0.5 }}
           className=""
         >
-          <Nav userName={userData.username || "User"} />
+          <Nav userName={userData.username || "User"} className={"sticky top-0 z-10"} />
           <div className="container mx-auto px-4 py-8">
           <div className="grid gap-8 md:grid-cols-3 lg:grid-cols-4 mt-8">
             <UserProfileCard userData={userData} />

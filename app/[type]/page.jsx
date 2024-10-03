@@ -51,30 +51,43 @@ const Page = ({ params }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
-            className="flex flex-col"
+            className=""
           >
             <Navbar className="sticky top-0 z-10" />
 
-            <div className="bg-gradient-to-br from-gray-900 to-gray-800 h-36 flex justify-center items-center p-4">
-              <h1 className="text-4xl text-center font-normal">{problems[0].typeName}</h1>
+            {/* Title Section */}
+            
+            <div className="bg-gradient-to-br from-gray-900 to-gray-800 h-24 md:h-36 flex justify-center items-center p-4">
+              <h1 className="text-2xl md:text-4xl text-center font-normal">
+                {problems[0]?.typeName}
+              </h1>
             </div>
-            <div className="flex flex-row justify-center gap-10 p-4">
-              <div className="flex flex-col items-center gap-4">
+            <div className="flex justify-center">
+            {/* Main Content */}
+            <div className="flex flex-col-reverse md:flex-row justify-center gap-10 p-4">
+              {/* Problem List */}
+              <div className="flex flex-col items-center gap-4 w-full md:w-3/4">
                 {filteredProblems.map((problem, index) => (
                   <Link href={`/problem/${problem._id}`} key={index}>
-                    <div className="flex items-center bg-gray-800 border border-gray-700 hover:shadow-xl transition-shadow duration-300 p-4 rounded-2xl h-28 shadow-lg w-[600px]">
+                    <div className="flex items-center bg-gray-800 border border-gray-700 hover:shadow-xl transition-shadow duration-300 p-4 rounded-2xl h-auto md:h-28 shadow-lg w-full md:w-[600px]">
                       <div className="flex flex-grow flex-row justify-between items-center gap-2">
                         <div>
-                          <h2 className="text-xl mb-2 font-normal">{problem.title}</h2>
+                          <h2 className="text-lg md:text-xl mb-2 font-normal">
+                            {problem.title}
+                          </h2>
                           <div className="text-sm font-normal">
-                            <span className={`text-center ${difficultyClasses[problem.difficulty]}`}>
+                            <span
+                              className={`text-center ${difficultyClasses[problem.difficulty]}`}
+                            >
                               {problem.difficulty}
                             </span>
                             , Array
                           </div>
                         </div>
-                        <button className="bg-transparent border-[0.1px] w-32 h-12 rounded-2xl border-gray-300 hover:bg-gray-700">
-                          <h1 className="font-thin">Solve Challenge</h1>
+                        <button className="bg-transparent border-[0.1px] w-24 md:w-32 h-10 md:h-12 rounded-2xl border-gray-300 hover:bg-gray-700">
+                          <h1 className="font-thin text-sm md:text-base">
+                            Solve Challenge
+                          </h1>
                         </button>
                       </div>
                     </div>
@@ -83,21 +96,23 @@ const Page = ({ params }) => {
               </div>
 
               {/* Filters Section */}
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 w-full md:w-1/4">
                 <div className="space-y-2">
-                  <h1 className="text-slate-300 text-xl">STATUS</h1>
+                  <h1 className="text-slate-300 text-lg md:text-xl">STATUS</h1>
                   <CheckboxLabel text={"Solved"} />
                   <CheckboxLabel text={"Unsolved"} />
                 </div>
                 <div className="border-[0.1px] border-slate-400"></div>
                 <div className="space-y-2">
-                  <h1 className="text-slate-300 text-xl">DIFFICULTY</h1>
+                  <h1 className="text-slate-300 text-lg md:text-xl">DIFFICULTY</h1>
                   <CheckboxLabel text={"Easy"} onClick={() => setType("Easy")} />
                   <CheckboxLabel text={"Medium"} onClick={() => setType("Medium")} />
                   <CheckboxLabel text={"Hard"} onClick={() => setType("Hard")} />
                 </div>
               </div>
+              </div>
             </div>
+  
           </motion.div>
         )}
       </AnimatePresence>
