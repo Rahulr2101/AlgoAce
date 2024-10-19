@@ -43,7 +43,7 @@ export default function Page() {
     <div className="flex min-h-[100dvh]  flex-col">
       <header className="bg-gray-900 px-4 py-3 shadow">
         <div className="container mx-auto flex items-center justify-between">
-          <Link href="/" className="flex items-center" prefetch={false}>
+          <Link href='/' className="flex items-center" prefetch={false}>
             <MountainIcon className="h-6 w-6" />
             <span className="ml-2 font-bold text-white">AlgoAce</span>
           </Link>
