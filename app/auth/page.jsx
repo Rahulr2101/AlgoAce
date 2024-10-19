@@ -16,25 +16,24 @@ export default function Page() {
   const router = useRouter()
 
   const handleUserLogin = async (e) => {
-    e.preventDefault() // Prevent default form submission
+    e.preventDefault()
     try {
       console.log("email:", email);
       const res = await login(email, password)
       console.log(res);
       if(res.success){
         router.push('/')
-      } // Ensure you call login with correct parameters
-       // Navigate to home page
+      }
     } catch (err) {
       console.error('Login failed:', err)
     }
   }
 
   const handleUserRegister = async (e) => {
-    e.preventDefault() // Prevent default form submission
+    e.preventDefault() 
     try {
-      await register(userName, password, email) // Ensure you call register with correct parameters
-      router.push('/') // Navigate to home page
+      await register(userName, password, email) 
+      router.push('/')
     } catch (err) {
       console.error('Registration failed:', err)
     }
@@ -44,7 +43,7 @@ export default function Page() {
     <div className="flex min-h-[100dvh]  flex-col">
       <header className="bg-gray-900 px-4 py-3 shadow">
         <div className="container mx-auto flex items-center justify-between">
-          <Link href="#" className="flex items-center" prefetch={false}>
+          <Link href="/" className="flex items-center" prefetch={false}>
             <MountainIcon className="h-6 w-6" />
             <span className="ml-2 font-bold text-white">AlgoAce</span>
           </Link>
