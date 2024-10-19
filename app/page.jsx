@@ -21,7 +21,6 @@ const Page = () => {
      
       setUserData(data);
       setTimeout(() => setLoading(false), 600);
-      // console.log(data);
     });
   }, []);
 
