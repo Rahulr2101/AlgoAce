@@ -12,7 +12,7 @@ import LoadingScreen from "@components/loadingScreen";
 import { motion } from "framer-motion";
 
 const Page = ({ params }) => {
-  const [value, setValue] = useState("print('Hello World');");
+  const [value, setValue] = useState("import json\nx=input()\ninput_list = json.loads(x)\n# input values are stored in input_list\n# Now you can process input_list as needed\n");
   const [page, setPage] = useState(0);
   const uniqueKeyRef = useRef("");
   const [compiler, setCompiler] = useState("python-3.9.7");
